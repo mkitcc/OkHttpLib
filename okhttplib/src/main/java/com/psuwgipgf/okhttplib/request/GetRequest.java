@@ -61,11 +61,24 @@ public class GetRequest extends OkHttpRequest {
 
     @Override
     public void build() {
-        request = new Request.Builder()
-                .url(host + url)
+        StringBuilder sb=new StringBuilder(host+url);
+        Request.Builder builder = new Request.Builder()
                 .tag(tag)
-                .get()
-                .build();
+                .get();
+        if (mHeader != null)
+            for (String key : mHeader.keySet()) {
+                builder.addHeader(key, mHeader.get(key));
+            }
+        if (mParams != null){
+            sb.append("?");
+            for (String key : mParams.keySet()) {
+                sb.append(key).append("=").append(mParams.get(key)).append("&");
+            }
+            sb.deleteCharAt(sb.length()-1);
+        }
+        builder.url(sb.toString());
+        request=builder.build();
+
     }
 
 
