@@ -1,4 +1,4 @@
-package com.psuwgipgf.test;
+package com.libvirus.okhttplib;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

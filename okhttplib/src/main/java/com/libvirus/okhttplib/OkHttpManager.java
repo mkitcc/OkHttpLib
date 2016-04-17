@@ -1,7 +1,8 @@
-package com.psuwgipgf.okhttplib;
+package com.libvirus.okhttplib;
 
-import com.psuwgipgf.okhttplib.request.GetRequest;
-import com.psuwgipgf.okhttplib.utils.LogHelper;
+import com.libvirus.okhttplib.request.GetRequest;
+import com.libvirus.okhttplib.request.PostRequest;
+import com.libvirus.okhttplib.utils.LogHelper;
 
 import okhttp3.OkHttpClient;
 
@@ -53,5 +54,8 @@ public class OkHttpManager {
 
     public static GetRequest get(){
         return new GetRequest();
+    }
+    public static PostRequest post(){
+        return new PostRequest();
     }
 }

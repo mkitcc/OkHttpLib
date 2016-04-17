@@ -1,4 +1,4 @@
-package com.psuwgipgf.okhttplib.request;
+package com.libvirus.okhttplib.request;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -60,7 +60,7 @@ public class GetRequest extends OkHttpRequest {
     }
 
     @Override
-    public void build() {
+    protected void build() {
         StringBuilder sb=new StringBuilder(host+url);
         Request.Builder builder = new Request.Builder()
                 .tag(tag)

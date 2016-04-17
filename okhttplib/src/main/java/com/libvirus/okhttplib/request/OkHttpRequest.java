@@ -1,7 +1,7 @@
-package com.psuwgipgf.okhttplib.request;
+package com.libvirus.okhttplib.request;
 
-import com.psuwgipgf.okhttplib.OkHttpManager;
-import com.psuwgipgf.okhttplib.callback.CallResult;
+import com.libvirus.okhttplib.OkHttpManager;
+import com.libvirus.okhttplib.callback.CallResult;
 
 import java.io.IOException;
 import java.util.Map;
@@ -39,7 +39,7 @@ public abstract class OkHttpRequest {
     public abstract OkHttpRequest addParams(String k, String v);
 
     public abstract OkHttpRequest setParams(Map<String, String> p);
-    public abstract void build();
+    protected abstract void build();
 
     public boolean cancel() {
         if (call != null && !call.isCanceled()) {

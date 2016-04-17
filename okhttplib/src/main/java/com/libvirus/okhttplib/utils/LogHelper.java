@@ -1,4 +1,4 @@
-package com.psuwgipgf.okhttplib.utils;
+package com.libvirus.okhttplib.utils;
 
 import android.text.TextUtils;
 import android.util.Log;

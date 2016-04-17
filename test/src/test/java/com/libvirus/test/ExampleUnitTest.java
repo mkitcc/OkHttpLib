@@ -1,4 +1,4 @@
-package com.psuwgipgf.okhttplib;
+package com.libvirus.test;
 
 import org.junit.Test;
 

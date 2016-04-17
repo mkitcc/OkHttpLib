@@ -1,8 +1,8 @@
-package com.psuwgipgf.test;
+package com.libvirus.test;
 
 import android.app.Application;
 
-import com.psuwgipgf.okhttplib.OkHttpManager;
+import com.libvirus.okhttplib.OkHttpManager;
 
 /**
  * Created by psu on 2016/4/10.
@@ -10,7 +10,7 @@ import com.psuwgipgf.okhttplib.OkHttpManager;
 public class AppContext extends Application {
 
 
-    String host="http://192.168.0.102:5000";
+    String host="http://192.168.0.107:5000";
 
     @Override
     public void onCreate() {
