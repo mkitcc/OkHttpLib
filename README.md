@@ -85,7 +85,7 @@ OkHttpManager.getInstace().host(host).log("psuwgipgf");
 ```
 也可以自己配置一个`OkHttpClient` 传入
 ```java
-OkHttpManager(mOkHttpClient);
+new OkHttpManager(mOkHttpClient);
 ```
 ### 单独设置某个请求的`OkHttpClient`
 ```java
