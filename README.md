@@ -64,7 +64,7 @@
 
 ### 普通POST请求
 
-    ```java
+```java
     OkHttpManager.post()
             .url("/")
             .exec(new CallResult(){
