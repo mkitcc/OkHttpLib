@@ -4,12 +4,18 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
 import okhttp3.Request;
 
 /**
  * Created by psu on 2016/4/16.
  */
 public class PostRequest extends OkHttpRequest {
+
+    public PostRequest setOkHttpClient(OkHttpClient p) {
+        mOkHttpClient = p;
+        return this;
+    }
 
     @Override
     public PostRequest host(String u) {
