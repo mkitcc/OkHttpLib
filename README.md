@@ -27,10 +27,13 @@
   ```java
   OkHttpManager.getInstace().host(host);
   ```
+  
+  
 ## 支持的功能
 
   * 一般的get请求
   * 一般的post请求
+  * 根据tag，取消某个请求，可以设置多级tag.
 
 ## 用法示例
 

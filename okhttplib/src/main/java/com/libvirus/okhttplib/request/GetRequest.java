@@ -62,12 +62,12 @@ public class GetRequest extends OkHttpRequest {
     @Override
     public OkHttpRequest setParams(Map<String, String> p) {
         mParams = p;
-        return null;
+        return this;
     }
 
     @Override
     protected void build() {
-        StringBuilder sb = new StringBuilder(host + url);
+        StringBuilder sb= new StringBuilder(host + url);
         Request.Builder builder = new Request.Builder()
                 .tag(tag)
                 .get();

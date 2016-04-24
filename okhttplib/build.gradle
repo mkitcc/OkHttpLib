@@ -1,5 +1,4 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.novoda.bintray-release'//添加
 
 android {
     compileSdkVersion 23
@@ -26,14 +25,7 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.2.0'
     compile 'com.squareup.okio:okio:1.6.0'
 }
-publish {
-    userOrg = 'psuwgipgf'//bintray.com用户名
-    groupId = 'com.libvirus.okhttplib'//jcenter上的路径
-    artifactId = 'okhttplib'//项目名称
-    publishVersion = '1.0.0'//版本号
-    desc = 'okhttp tools'//描述，不重要
-    website = 'https://github.com/psuwgipgf/OkHttpLib'//网站，不重要
-}
+
 android {
     lintOptions {
         abortOnError false
