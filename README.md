@@ -33,13 +33,13 @@
 
   * 一般的get请求
   * 一般的post请求(参数可以是数组)
+  * post上传文件
   * 根据tag，取消某个请求，可以设置多级tag.
   * 日志
   
 ## 以后要支持的功能
   * cookie 自动管理
-  * post上传文件
-  * post上传文件返回进度
+  * post上传/下载的进度
 
 ## 用法示例
 
@@ -82,6 +82,31 @@
                     Log.e("post",response.body().string());
                 }
             });
+```
+
+### POST上传文件
+```java
+Map<String, Object> params = new HashMap();
+        params.put("arr", "1");
+        params.put("text", new File(view.getContext().getCacheDir(), "123.txt"));
+ModelManager.apiPostFile("/", params)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<String>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        view.setText("没有网了……");
+                    }
+
+                    @Override
+                    public void onNext(String s) {
+                        view.setText(s);
+                    }
+                });
 ```
 
 ## 配置

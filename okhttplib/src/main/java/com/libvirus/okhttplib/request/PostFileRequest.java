@@ -1,5 +1,8 @@
 package com.libvirus.okhttplib.request;
 
+import java.io.File;
+import java.net.FileNameMap;
+import java.net.URLConnection;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -8,6 +11,7 @@ import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 
 /**
  * Created by psu on 2016/4/29.
@@ -62,25 +66,33 @@ public class PostFileRequest extends OkHttpRequest {
         return this;
     }
 
-    public PostFileRequest addParam(String k, Objects v) {
-//        BodyBuilder.addFormDataPart()
+    public PostFileRequest addParam(String k, Object v) {
+        if (File.class.isInstance(v)) {
+            File value = (File) v;
+            RequestBody body = RequestBody.create(
+                    MediaType.parse(guessMimeType(value.getName())), value);
+            BodyBuilder.addFormDataPart(k, value.getName(), body);
+        } else {
+            BodyBuilder.addFormDataPart(k, v.toString());
+        }
+
         return this;
     }
 
-    public PostFileRequest setParam(Map<String, String> p) {
+    public PostFileRequest setParam(Map<String, Object> p) {
         if (p != null) {
             for (String key : p.keySet()) {
-//                builderBody.add(key, p.get(key));
+                addParam(key, p.get(key));
             }
         }
 
         return this;
     }
 
-    public PostFileRequest addParams(String key, List<String> p) {
+    public PostFileRequest addParams(String key, List<Objects> p) {
         if (p != null) {
-            for (String item : p) {
-//                builderBody.add(key, item);
+            for (Objects item : p) {
+                addParam(key, item);
             }
         }
         return this;
@@ -88,13 +100,23 @@ public class PostFileRequest extends OkHttpRequest {
 
     @Override
     protected void build() {
-        if(type==null){
+        if (type == null) {
             BodyBuilder.setType(MultipartBody.FORM);
-        }else{
+        } else {
             BodyBuilder.setType(type);
         }
         builder.url(host + url)
                 .post(BodyBuilder.build());
         request = builder.build();
+    }
+
+
+    private String guessMimeType(String path) {
+        FileNameMap fileNameMap = URLConnection.getFileNameMap();
+        String contentTypeFor = fileNameMap.getContentTypeFor(path);
+        if (contentTypeFor == null) {
+            contentTypeFor = "application/octet-stream";
+        }
+        return contentTypeFor;
     }
 }
