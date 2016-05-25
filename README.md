@@ -35,10 +35,11 @@
   * 一般的post请求(参数可以是数组)
   * post上传文件
   * 根据tag，取消某个请求，可以设置多级tag.
+  * cookie 
   * 日志
   
 ## 以后要支持的功能
-  * cookie 自动管理
+  
   * post上传/下载的进度
 
 ## 用法示例
@@ -107,6 +108,27 @@ ModelManager.apiPostFile("/", params)
                         view.setText(s);
                     }
                 });
+```
+### 设置Cookie
+```java
+		OkHttpManager.getInstace().host(UrlInterface.HOST).log("psuwgipgf")
+				.setCookie(new CookieInterface() {
+
+					@Override
+					public void saveCookie(String cookie) {
+						setCookie(cookie);
+					}
+
+					@Override
+					public String getKey() {
+						return key;
+					}
+
+					@Override
+					public String getCookie() {
+						return getSharedPreCookie();
+					}
+				});
 ```
 
 ## 配置
