@@ -3,6 +3,8 @@ package com.libvirus.okhttplib;
 import com.libvirus.okhttplib.request.GetRequest;
 import com.libvirus.okhttplib.request.PostFileRequest;
 import com.libvirus.okhttplib.request.PostRequest;
+import com.libvirus.okhttplib.utils.CookieHelper;
+import com.libvirus.okhttplib.utils.CookieInterface;
 import com.libvirus.okhttplib.utils.LogHelper;
 
 import java.util.concurrent.TimeUnit;
@@ -17,31 +19,34 @@ import okhttp3.OkHttpClient;
 public class OkHttpManager {
 
     private static OkHttpManager mInstance;
-    private volatile OkHttpClient mOkHttpClient;
+    private OkHttpClient mOkHttpClient;
     public String host;
 
+    private OkHttpManager(){
+        setOkHttpClient(null);
+    }
     public static OkHttpManager getInstace() {
         if (mInstance == null) {
             synchronized (OkHttpManager.class) {
                 if (mInstance == null) {
-                    mInstance = new OkHttpManager(null);
+                    mInstance = new OkHttpManager();
                 }
             }
         }
         return mInstance;
     }
 
-    public OkHttpManager(OkHttpClient okHttpClient) {
+    public OkHttpManager setOkHttpClient(OkHttpClient okHttpClient) {
         if (okHttpClient != null) {
             mOkHttpClient = okHttpClient;
         } else {
-            //默认OkHttpClient;
+            // 默认OkHttpClient;
             mOkHttpClient = new OkHttpClient().newBuilder()
-                    .connectTimeout(1l, TimeUnit.MINUTES)
-                    .readTimeout(1l, TimeUnit.MINUTES)
-                    .writeTimeout(1l, TimeUnit.MINUTES)
-                    .build();
+                    .connectTimeout(500l, TimeUnit.MINUTES)
+                    .readTimeout(500l, TimeUnit.MINUTES)
+                    .writeTimeout(500l, TimeUnit.MINUTES).build();
         }
+        return this;
     }
 
     public OkHttpClient getOkHttpClient() {
@@ -49,9 +54,17 @@ public class OkHttpManager {
         return mOkHttpClient;
     }
 
-
     public OkHttpManager log(String tag) {
-        mOkHttpClient = getOkHttpClient().newBuilder().addInterceptor(new LogHelper(tag)).build();
+        mOkHttpClient = getOkHttpClient().newBuilder()
+                .addInterceptor(new LogHelper(tag)).build();
+        return this;
+    }
+
+    public OkHttpManager setCookie(CookieInterface cookie) {
+        CookieHelper mCookieHelper = new CookieHelper();
+        mCookieHelper.mCookieOpter = cookie;
+        mOkHttpClient = getOkHttpClient().newBuilder()
+                .addNetworkInterceptor(mCookieHelper).build();
         return this;
     }
 
@@ -60,7 +73,7 @@ public class OkHttpManager {
         return this;
     }
 
-    //取消Call 为空取消所有
+    // 取消Call 为空取消所有
     public boolean cancel(String... tag) {
         Dispatcher dispatcher = mOkHttpClient.dispatcher();
         if (tag == null && tag.length < 1) {
@@ -82,7 +95,7 @@ public class OkHttpManager {
                 runCall.cancel();
             }
         }
-        return false;
+        return true;
     }
 
     public static GetRequest getRequest() {
